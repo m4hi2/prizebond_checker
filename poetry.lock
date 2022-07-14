@@ -1,0 +1,21 @@
+[[package]]
+name = "pypdf2"
+version = "2.5.0"
+description = "A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+crypto = ["pycryptodome"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "623edca47be31bc87efa629ea7664ba408d509a2b9526019e3ab02675a6fc9c5"
+
+[metadata.files]
+pypdf2 = [
+    {file = "PyPDF2-2.5.0-py3-none-any.whl", hash = "sha256:72212067234907341df620e59d6713ec702fa3300cda4559175a71f6fcd12a83"},
+    {file = "PyPDF2-2.5.0.tar.gz", hash = "sha256:5802b1f40fa79be1b5ab9edc95a4e7f7e73399589db4f0e66ca831f449e7a2cd"},
+]
