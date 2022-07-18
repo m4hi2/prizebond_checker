@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+from dustu_lib.env_reader import get_env
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,10 +79,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "prize_bond_draw_checker",
-        "USER": "mydatabaseuser",
-        "PASSWORD": "mypassword",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "USER": get_env("DATABASE_USER"),
+        "PASSWORD": get_env("DATABASE_PASSWORD"),
+        "HOST": get_env("DATABASE_HOST"),
+        "PORT": get_env("DATABASE_PORT"),
     }
 }
 
