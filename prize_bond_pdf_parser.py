@@ -15,7 +15,9 @@ FOURTH_PRIZE_PATTERN = re.compile(
 FIFTH_PRIZE_PATTERN = re.compile(r"10,000/=.*?([\n 0-9]*)\[", re.MULTILINE | re.DOTALL)
 
 
-class PrizeBondParser:
+class PrizeBondDrawParser:
+    """Prize bond draw result parser for 100th draw and onwards."""
+
     def __init__(self, prize_bond_draw_pdf_content_bytes: bytes) -> None:
         self.first_prize: List[str] = []
         self.second_prize: List[str] = []
@@ -52,7 +54,7 @@ class PrizeBondParser:
             self.prize_bond_draw_pdf_text
         )
 
-        PrizeBondParser._populate_prize_brackets_with_cleaned_numbers(
+        PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.first_prize, first_prize_numbers
         )
 
@@ -61,7 +63,7 @@ class PrizeBondParser:
             self.prize_bond_draw_pdf_text
         )
 
-        PrizeBondParser._populate_prize_brackets_with_cleaned_numbers(
+        PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.second_prize, second_prize_numbers
         )
 
@@ -70,7 +72,7 @@ class PrizeBondParser:
             self.prize_bond_draw_pdf_text
         )
 
-        PrizeBondParser._populate_prize_brackets_with_cleaned_numbers(
+        PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.third_prize, third_prize_numbers
         )
 
@@ -79,7 +81,7 @@ class PrizeBondParser:
             self.prize_bond_draw_pdf_text
         )
 
-        PrizeBondParser._populate_prize_brackets_with_cleaned_numbers(
+        PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.fourth_prize, fourth_prize_numbers
         )
 
@@ -88,7 +90,7 @@ class PrizeBondParser:
             self.prize_bond_draw_pdf_text
         )
 
-        PrizeBondParser._populate_prize_brackets_with_cleaned_numbers(
+        PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.fifth_prize, fifth_prize_numbers
         )
 
