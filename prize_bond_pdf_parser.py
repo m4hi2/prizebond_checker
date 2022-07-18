@@ -7,7 +7,7 @@ import PyPDF2
 FIRST_PRIZE_PATTERN = re.compile(r"6,00,000/=\n \n([0-9]{6,7})\n", re.MULTILINE)
 SECOND_PRIZE_PATTERN = re.compile(r"3,25,000/=\n \n([0-9]{6,7})\n", re.MULTILINE)
 THIRD_PRIZE_PATTERN = re.compile(
-    r"1,00,000/=.*([0-9]{6,7}\n \n[0-9]{6,7})\n", re.MULTILINE | re.DOTALL
+    r"1,00,000/=.*?([0-9]{6,7}\n \n[0-9]{6,7})\n", re.MULTILINE | re.DOTALL
 )
 FOURTH_PRIZE_PATTERN = re.compile(
     r"50,000/=.*?\n([0-9]{6,7}\n \n[0-9]{6,7})\n", re.MULTILINE | re.DOTALL
