@@ -41,12 +41,17 @@ class PrizeBondDrawParser:
         for number in prize_numbers:
             number = number.replace("\n", "")
 
+            if len(number) < 4:
+                continue
+
             if len(number) < 7:
                 match len(number):
                     case 6:
                         number = "0" + number
                     case 5:
                         number = "00" + number
+                    case 4:
+                        number = "000" + number
             prize_bracket.append(number)
 
     def parse_first_prize(self) -> None:
