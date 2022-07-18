@@ -1,6 +1,6 @@
 import io
 import re
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import PyPDF2
 
@@ -38,19 +38,17 @@ class PrizeBondDrawParser:
 
     @staticmethod
     def _populate_prize_brackets_with_cleaned_numbers(
-        prize_bracket: List[str], prize_numbers: List[str]
+        prize_bracket: List[str], prize_numbers: List[str] | Tuple[str]
     ) -> None:
-        numbers = prize_numbers[0].replace("\n", "")
-        numbers = numbers.strip()
+        for number in prize_numbers:
+            number = number.replace("\n", "")
 
-        for number in numbers.split():
             if len(number) < 7:
                 match len(number):
                     case 6:
                         number = "0" + number
                     case 5:
                         number = "00" + number
-
             prize_bracket.append(number)
 
     def parse_first_prize(self) -> None:
@@ -72,27 +70,41 @@ class PrizeBondDrawParser:
         )
 
     def parse_third_prize(self) -> None:
-        third_prize_numbers: List[str] = THIRD_PRIZE_PATTERN.findall(
+        third_prize_numbers_list: List[Tuple[str]] = THIRD_PRIZE_PATTERN.findall(
             self.prize_bond_draw_pdf_text
         )
+
+        third_prize_numbers = third_prize_numbers_list[0]
 
         PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.third_prize, third_prize_numbers
         )
 
     def parse_fourth_prize(self) -> None:
-        fourth_prize_numbers: List[str] = FOURTH_PRIZE_PATTERN.findall(
+        fourth_prize_numbers_list: List[Tuple[str]] = FOURTH_PRIZE_PATTERN.findall(
             self.prize_bond_draw_pdf_text
         )
+
+        fourth_prize_numbers = fourth_prize_numbers_list[0]
 
         PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.fourth_prize, fourth_prize_numbers
         )
 
     def parse_fifth_prize(self) -> None:
-        fifth_prize_numbers: List[str] = FIFTH_PRIZE_PATTERN.findall(
+        fifth_prize_numbers_list: List[str] = FIFTH_PRIZE_PATTERN.findall(
             self.prize_bond_draw_pdf_text
         )
+
+        fifth_prize_numbers_str = fifth_prize_numbers_list[0]
+        fifth_prize_numbers_str = fifth_prize_numbers_str.strip()
+
+        fifth_prize_numbers_combined = fifth_prize_numbers_str.split("\n")
+
+        fifth_prize_numbers = []
+
+        for combined_numbers in fifth_prize_numbers_combined:
+            fifth_prize_numbers += combined_numbers.split()
 
         PrizeBondDrawParser._populate_prize_brackets_with_cleaned_numbers(
             self.fifth_prize, fifth_prize_numbers
