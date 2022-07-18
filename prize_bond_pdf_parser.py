@@ -16,13 +16,13 @@ FIFTH_PRIZE_PATTERN = re.compile(r"10,000/=.*?([\n 0-9]*)\[", re.MULTILINE | re.
 
 
 class PrizeBondParser:
-    first_prize: List[str] = []
-    second_prize: List[str] = []
-    third_prize: List[str] = []
-    fourth_prize: List[str] = []
-    fifth_prize: List[str] = []
-
     def __init__(self, prize_bond_draw_pdf_content_bytes: bytes) -> None:
+        self.first_prize: List[str] = []
+        self.second_prize: List[str] = []
+        self.third_prize: List[str] = []
+        self.fourth_prize: List[str] = []
+        self.fifth_prize: List[str] = []
+
         prize_bond_draw_pdf_file_stream = io.BytesIO(prize_bond_draw_pdf_content_bytes)
 
         prize_bond_draw_pdf_reader = PyPDF2.PdfReader(prize_bond_draw_pdf_file_stream)
