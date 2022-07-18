@@ -4,18 +4,16 @@ from typing import Dict, List, Tuple
 
 import PyPDF2
 
-FIRST_PRIZE_PATTERN = re.compile(r"6,00,000/=.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL)
-SECOND_PRIZE_PATTERN = re.compile(
-    r"3,25,000/=.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL
-)
+FIRST_PRIZE_PATTERN = re.compile(r"6,00,000/.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL)
+SECOND_PRIZE_PATTERN = re.compile(r"3,25,000/.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL)
 THIRD_PRIZE_PATTERN = re.compile(
-    r"1,00,000/=.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
+    r"1,00,000/.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
 )
 FOURTH_PRIZE_PATTERN = re.compile(
-    r"50,000/=.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
+    r"50,000/.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
 )
 FIFTH_PRIZE_PATTERN = re.compile(
-    r"10,000/=.*?([\n 0-9]{330,360})", re.MULTILINE | re.DOTALL
+    r"10,000/.*?([\n 0-9]{330,360})", re.MULTILINE | re.DOTALL
 )
 
 
