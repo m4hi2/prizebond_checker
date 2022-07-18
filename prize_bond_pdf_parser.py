@@ -34,9 +34,18 @@ class PrizeBondParser:
     def _populate_prize_brackets_with_cleaned_numbers(
         prize_bracket: List[str], prize_numbers: List[str]
     ) -> None:
-        for number in prize_numbers:
-            cleaned_number = number.replace("\n", "")
-            prize_bracket.append(cleaned_number)
+        numbers = prize_numbers[0].replace("\n", "")
+        numbers = numbers.strip()
+
+        for number in numbers.split():
+            if len(number) < 7:
+                match len(number):
+                    case 6:
+                        number = "0" + number
+                    case 5:
+                        number = "00" + number
+
+            prize_bracket.append(number)
 
     def parse_first_prize(self) -> None:
         first_prize_numbers: List[str] = FIRST_PRIZE_PATTERN.findall(
