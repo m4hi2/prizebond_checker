@@ -1,5 +1,6 @@
 import requests
 from django.db import models
+from dustu_lib.helpers import make_ordinal
 from dustu_lib.models import TimeStampedUUIDModel
 
 
@@ -11,8 +12,15 @@ class PrizeBondDraw(TimeStampedUUIDModel):
     def create(cls, draw_term: int):
         instance = cls.objects.create(draw_term=draw_term)
 
-    def _download_prize_bond_draw_pdf(self):
+        return instance
 
+    def _download_prize_bond_draw_pdf(self) -> bytes:
+        draw_term_ordinal = make_ordinal(self.draw_term)
+        draw_pdf_url = f"https://www.bb.org.bd/investfacility/prizebond/{draw_term_ordinal}draw.pdf"
+
+        pdf_response = requests.get(draw_pdf_url)
+
+        return pdf_response.content
 
 
 class DrawWinner(TimeStampedUUIDModel):
