@@ -1,7 +1,11 @@
+from typing import Dict, List
+
 import requests
 from django.db import models
 from dustu_lib.helpers import make_ordinal
 from dustu_lib.models import TimeStampedUUIDModel
+
+from .utils.prize_bond_pdf_parser import PrizeBondDrawParser
 
 
 class PrizeBondDraw(TimeStampedUUIDModel):
@@ -21,6 +25,11 @@ class PrizeBondDraw(TimeStampedUUIDModel):
         pdf_response = requests.get(draw_pdf_url)
 
         return pdf_response.content
+
+    def _parse_draw_results(self, draw_pdf: bytes) -> Dict[str, List[str]]:
+        parser = PrizeBondDrawParser(draw_pdf)
+
+        return parser.parse_all_prize()
 
 
 class DrawWinner(TimeStampedUUIDModel):
