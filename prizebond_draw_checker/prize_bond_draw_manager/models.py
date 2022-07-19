@@ -38,6 +38,7 @@ class PrizeBondDraw(TimeStampedUUIDModel):
 
         pdf_response = requests.get(draw_pdf_url)
 
+        # The page redirects to BB main site if the draw is not available
         if "<html>" in str(pdf_response.content):
             return None
 
