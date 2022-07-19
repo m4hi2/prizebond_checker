@@ -121,11 +121,11 @@ class PrizeBondDrawParser:
         self.parse_fifth_prize()
 
         all_prize_numbers = {
-            "first_prize": self.first_prize,
-            "second_prize": self.second_prize,
-            "third_prize": self.third_prize,
-            "fourth_prize": self.fourth_prize,
-            "fifth_prize": self.fifth_prize,
+            "first": self.first_prize,
+            "second": self.second_prize,
+            "third": self.third_prize,
+            "fourth": self.fourth_prize,
+            "fifth": self.fifth_prize,
         }
 
         return all_prize_numbers
