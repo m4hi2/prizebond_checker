@@ -31,6 +31,15 @@ class PrizeBondDraw(TimeStampedUUIDModel):
 
         return parser.parse_all_prize()
 
+    def _create_draw_winners(self, all_prize: Dict[str, List[str]]):
+        for prize_bracket, winning_numbers in all_prize.items():
+            for winning_number in winning_numbers:
+                DrawWinner.create(
+                    winning_number=winning_number,
+                    prize_bracket=prize_bracket,
+                    draw=self,
+                )
+
 
 class DrawWinner(TimeStampedUUIDModel):
     winning_number = models.CharField(max_length=7, null=False, blank=False)
