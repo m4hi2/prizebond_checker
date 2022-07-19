@@ -1,4 +1,5 @@
-from django.core.management.base import BaseCommand, CommandError, CommandParser
+from django.core.management.base import (BaseCommand, CommandError,
+                                         CommandParser)
 from django.db import IntegrityError
 
 from ...models import PrizeBondDraw
@@ -24,7 +25,11 @@ class Command(BaseCommand):
             raise CommandError("--upto_term argument not provided.")
 
         for i in range(80, upto_term + 1):
+            if i == 98:
+                print("Term 98 is not parsable. Weird encoding...")
+                continue
             try:
                 PrizeBondDraw.create(i)
+                print(f"Parsed Term: {i}")
             except IntegrityError:
                 print(f"Term: {i} already exists.")
