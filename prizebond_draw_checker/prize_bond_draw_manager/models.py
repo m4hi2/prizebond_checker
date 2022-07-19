@@ -17,22 +17,29 @@ class PrizeBondDraw(TimeStampedUUIDModel):
     draw_date = models.DateField(blank=True, null=True)
 
     @classmethod
-    def create(cls: Type[PR], draw_term: int) -> PR:
+    def create(cls: Type[PR], draw_term: int) -> PR | None:
         instance: PrizeBondDraw = cls.objects.create(draw_term=draw_term)
         instance._set_draw_date()
 
         pdf = instance._download_prize_bond_draw_pdf()
+        if not pdf:
+            instance.delete()
+            return None
+
         draw_results = instance._parse_draw_results(pdf)
 
         instance._create_draw_winners(draw_results)
 
         return instance
 
-    def _download_prize_bond_draw_pdf(self) -> bytes:
+    def _download_prize_bond_draw_pdf(self) -> bytes | None:
         draw_term_ordinal = make_ordinal(self.draw_term)
         draw_pdf_url = f"https://www.bb.org.bd/investfacility/prizebond/{draw_term_ordinal}draw.pdf"
 
         pdf_response = requests.get(draw_pdf_url)
+
+        if "<html>" in str(pdf_response.content):
+            return None
 
         return pdf_response.content
 
