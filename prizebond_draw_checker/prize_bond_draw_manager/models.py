@@ -1,3 +1,4 @@
+import datetime
 from typing import Dict, List, Type, TypeVar
 
 import requests
@@ -18,6 +19,7 @@ class PrizeBondDraw(TimeStampedUUIDModel):
     @classmethod
     def create(cls: Type[PR], draw_term: int) -> PR:
         instance: PrizeBondDraw = cls.objects.create(draw_term=draw_term)
+        instance._set_draw_date()
 
         pdf = instance._download_prize_bond_draw_pdf()
         draw_results = instance._parse_draw_results(pdf)
@@ -47,6 +49,44 @@ class PrizeBondDraw(TimeStampedUUIDModel):
                     prize_bracket=prize_bracket,
                     draw=self,
                 )
+
+    def _set_draw_date(self) -> None:
+        draw_date_80th = datetime.date(2015, 7, 31)
+
+        draw_term_delta = self.draw_term - 80
+
+        weeks_delta = draw_term_delta * 13  # 13 weeks is approx 3 months
+
+        new_date = draw_date_80th + datetime.timedelta(weeks=weeks_delta)
+
+        match new_date.month:
+            case 12:
+                new_date = datetime.date(new_date.year + 1, 1, 31)
+            case 1:
+                new_date = datetime.date(new_date.year, 1, 31)
+            case 2:
+                new_date = datetime.date(new_date.year, 1, 31)
+            case 3:
+                new_date = datetime.date(new_date.year, 4, 30)
+            case 4:
+                new_date = datetime.date(new_date.year, 4, 30)
+            case 5:
+                new_date = datetime.date(new_date.year, 4, 30)
+            case 6:
+                new_date = datetime.date(new_date.year, 7, 31)
+            case 7:
+                new_date = datetime.date(new_date.year, 7, 31)
+            case 8:
+                new_date = datetime.date(new_date.year, 7, 31)
+            case 9:
+                new_date = datetime.date(new_date.year, 10, 31)
+            case 10:
+                new_date = datetime.date(new_date.year, 10, 31)
+            case 11:
+                new_date = datetime.date(new_date.year, 10, 31)
+
+        self.draw_date = new_date
+        self.save()
 
 
 class DrawWinner(TimeStampedUUIDModel):
