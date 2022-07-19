@@ -97,8 +97,8 @@ class PrizeBondDraw(TimeStampedUUIDModel):
         return instance
 
     @staticmethod
-    def get_next_term():
-        draw_terms = [draw.draw_term for draw in PrizeBondDraw.objects.all()]
+    def get_next_term() -> int:
+        draw_terms: List[int] = [draw.draw_term for draw in PrizeBondDraw.objects.all()]
 
         next_term = max(draw_terms) + 1
 
