@@ -13,7 +13,7 @@ FOURTH_PRIZE_PATTERN = re.compile(
     r"50,000/.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
 )
 FIFTH_PRIZE_PATTERN = re.compile(
-    r"10,000/.*?([\n 0-9]{330,600})", re.MULTILINE | re.DOTALL
+    r"10,000/.*?([\n 0-9]{300,600})", re.MULTILINE | re.DOTALL
 )
 
 
