@@ -39,3 +39,11 @@ class DrawWinner(TimeStampedUUIDModel):
     draw = models.ForeignKey(
         PrizeBondDraw, related_name="draw_winners", on_delete=models.CASCADE
     )
+
+    @classmethod
+    def create(cls, winning_number: str, prize_bracket: str, draw):
+        instance = cls.objects.create(
+            winning_number=winning_number, prize_bracket=prize_bracket, draw=draw
+        )
+
+        return instance
