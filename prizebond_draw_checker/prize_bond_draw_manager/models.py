@@ -96,6 +96,14 @@ class PrizeBondDraw(TimeStampedUUIDModel):
         self.draw_date = new_date
         self.save()
 
+    @staticmethod
+    def get_next_term():
+        draw_terms = [draw.draw_term for draw in PrizeBondDraw.objects.all()]
+
+        next_term = max(draw_terms) + 1
+
+        return next_term
+
 
 class DrawWinner(TimeStampedUUIDModel):
     winning_number = models.CharField(max_length=7, null=False, blank=False)
