@@ -122,3 +122,12 @@ class DrawWinner(TimeStampedUUIDModel):
         )
 
         return instance
+
+    @staticmethod
+    def check_prize_bond_number(number: str) -> DW | None:
+        try:
+            winner: DrawWinner = DrawWinner.objects.get(winning_number=number)
+
+            return winner
+        except DrawWinner.DoesNotExist:
+            return None
