@@ -9,7 +9,10 @@ class PrizeBondDraw(TimeStampedUUIDModel):
 
     @classmethod
     def create(cls, draw_term: int):
-        cls.objects.create(draw_term=draw_term)
+        instance = cls.objects.create(draw_term=draw_term)
+
+    def _download_prize_bond_draw_pdf(self):
+
 
 
 class DrawWinner(TimeStampedUUIDModel):
