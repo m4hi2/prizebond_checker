@@ -52,6 +52,14 @@ class PrizeBondDrawParser:
                         number = "00" + number
                     case 4:
                         number = "000" + number
+
+            if len(number) == 14:
+                number1 = number[:7]
+                number2 = number[7:]
+                prize_bracket.append(number1)
+                prize_bracket.append(number2)
+                continue
+
             prize_bracket.append(number)
 
     def parse_first_prize(self) -> None:
