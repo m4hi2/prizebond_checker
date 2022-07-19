@@ -13,7 +13,7 @@ DW = TypeVar("DW", bound="DrawWinner")
 
 
 class PrizeBondDraw(TimeStampedUUIDModel):
-    draw_term = models.IntegerField(blank=False, null=False)
+    draw_term = models.IntegerField(blank=False, null=False, unique=True)
     draw_date = models.DateField(blank=True, null=True)
 
     @classmethod
