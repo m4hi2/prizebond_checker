@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Type, TypeVar
 
 import requests
 from django.db import models
@@ -7,14 +7,18 @@ from dustu_lib.models import TimeStampedUUIDModel
 
 from .utils.prize_bond_pdf_parser import PrizeBondDrawParser
 
+PR = TypeVar("PR", bound="PrizeBondDraw")
+DW = TypeVar("DW", bound="DrawWinner")
+
 
 class PrizeBondDraw(TimeStampedUUIDModel):
     draw_term = models.IntegerField(blank=False, null=False)
     draw_date = models.DateField(blank=True, null=True)
 
     @classmethod
-    def create(cls, draw_term: int):
-        instance = cls.objects.create(draw_term=draw_term)
+    def create(cls: Type[PR], draw_term: int) -> PR:
+        instance: PrizeBondDraw = cls.objects.create(draw_term=draw_term)
+
 
         return instance
 
@@ -50,7 +54,9 @@ class DrawWinner(TimeStampedUUIDModel):
     )
 
     @classmethod
-    def create(cls, winning_number: str, prize_bracket: str, draw):
+    def create(
+        cls: Type[DW], winning_number: str, prize_bracket: str, draw: PrizeBondDraw
+    ) -> DW:
         instance = cls.objects.create(
             winning_number=winning_number, prize_bracket=prize_bracket, draw=draw
         )
