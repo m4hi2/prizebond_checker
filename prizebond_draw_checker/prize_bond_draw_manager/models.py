@@ -19,6 +19,10 @@ class PrizeBondDraw(TimeStampedUUIDModel):
     def create(cls: Type[PR], draw_term: int) -> PR:
         instance: PrizeBondDraw = cls.objects.create(draw_term=draw_term)
 
+        pdf = instance._download_prize_bond_draw_pdf()
+        draw_results = instance._parse_draw_results(pdf)
+
+        instance._create_draw_winners(draw_results)
 
         return instance
 
