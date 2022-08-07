@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block head_title %}{% endblock %}</title>
-    {% block extra_head %}
-    {% endblock %}
+    <title>
+        {% block head_title %}{% endblock %}
+    </title>
+    {% block extra_head %}{% endblock %}
     {% load bootstrap5 %}
-
+    {% load static %}
     {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    {% bootstrap_css %} {% bootstrap_javascript %}
 
 </head>
 <body>
 {% block body %}
-    {% bootstrap_messages %}
-    {% block content %}
-    {% endblock %}
+    <div class="container pt-5 cred-box-centered">
+        {% bootstrap_messages %}
+        {% block content %}{% endblock %}
+    </div>
 {% endblock %}
-{% block extra_body %}
-{% endblock %}
+{% block extra_body %}{% endblock %}
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 </body>
 </html>
