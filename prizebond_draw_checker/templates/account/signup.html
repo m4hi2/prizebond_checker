@@ -12,7 +12,7 @@
 
     <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
     </p>
-
+    {% include "sign_in_with_google_button.html" %}
     <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
@@ -20,7 +20,7 @@
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
         {% buttons %}
-        <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
+            <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
         {% endbuttons %}
     </form>
 
