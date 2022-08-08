@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "prize_bond_draw_manager.apps.PrizeBondDrawManagerConfig",
+    "prize_checker.apps.PrizeCheckerConfig",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
