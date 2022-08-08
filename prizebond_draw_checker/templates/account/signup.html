@@ -1,6 +1,8 @@
 {% extends "account/base.html" %}
 
 {% load i18n %}
+{% load socialaccount %}
+{% get_providers as provider %}
 
 {% block head_title %}
     {% trans "Signup" %}
@@ -12,7 +14,7 @@
 
     <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
     </p>
-    {% include "sign_in_with_google_button.html" %}
+    {% include "socialaccount/snippets/provider_list.html" %}
     <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
