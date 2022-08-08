@@ -13,8 +13,10 @@
             </li>
         {% endfor %}
     {% endif %}
-    <li>
-        <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }} "
-           href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-    </li>
+        {% if provider.id == "google" %}
+            {% include "sign_in_with_google_button.html" %}
+        {% else %}
+            <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }} "
+               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
+        {% endif %}
 {% endfor %}
