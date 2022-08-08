@@ -1,0 +1,7 @@
+{% load socialaccount %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/accounts.css" %}">
+<a title="{{ provider.name }}" class="login-with-google-btn btn"
+   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+    Sign in with Google
+</a>
