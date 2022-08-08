@@ -2,3 +2,5 @@
 .envrc
 *.pyc
 *.pdf
+staticfiles/
+.idea/
