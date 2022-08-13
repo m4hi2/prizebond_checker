@@ -4,8 +4,8 @@ from typing import Dict, List, Tuple
 
 import PyPDF2
 
-FIRST_PRIZE_PATTERN = re.compile(r"6,00,000/.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL)
-SECOND_PRIZE_PATTERN = re.compile(r"3,25,000/.*?([0-9]{6,7})", re.MULTILINE | re.DOTALL)
+FIRST_PRIZE_PATTERN = re.compile(r"6,00,000/.*?(\d{6,7})", re.MULTILINE | re.DOTALL)
+SECOND_PRIZE_PATTERN = re.compile(r"3,25,000/.*?(\d{6,7})", re.MULTILINE | re.DOTALL)
 THIRD_PRIZE_PATTERN = re.compile(
     r"1,00,000/.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
 )
@@ -13,7 +13,7 @@ FOURTH_PRIZE_PATTERN = re.compile(
     r"50,000/.*?(\d{6,7}).*?(\d{6,7})", re.MULTILINE | re.DOTALL
 )
 FIFTH_PRIZE_PATTERN = re.compile(
-    r"10,000/.*?([\n 0-9]{300,600})", re.MULTILINE | re.DOTALL
+    r"10,000/.*?([\n \d]{300,600})", re.MULTILINE | re.DOTALL
 )
 
 
@@ -35,8 +35,20 @@ class PrizeBondDrawParser:
         self.prize_bond_draw_pdf_text = prize_bond_draw_pdf_first_page.extract_text()
 
     @staticmethod
+    def fix_number_size(number: str) -> str:
+        if len(number) < 7:
+            match len(number):
+                case 6:
+                    number = "0" + number
+                case 5:
+                    number = "00" + number
+                case 4:
+                    number = "000" + number
+        return number
+
+    @staticmethod
     def _populate_prize_brackets_with_cleaned_numbers(
-        prize_bracket: List[str], prize_numbers: List[str] | Tuple[str]
+            prize_bracket: List[str], prize_numbers: List[str] | Tuple[str]
     ) -> None:
         for number in prize_numbers:
             number = number.replace("\n", "")
@@ -44,21 +56,14 @@ class PrizeBondDrawParser:
             if len(number) < 4:
                 continue
 
-            if len(number) < 7:
-                match len(number):
-                    case 6:
-                        number = "0" + number
-                    case 5:
-                        number = "00" + number
-                    case 4:
-                        number = "000" + number
-
             if len(number) == 14:
                 number1 = number[:7]
                 number2 = number[7:]
                 prize_bracket.append(number1)
                 prize_bracket.append(number2)
                 continue
+
+            number = PrizeBondDrawParser.fix_number_size(number)
 
             prize_bracket.append(number)
 
