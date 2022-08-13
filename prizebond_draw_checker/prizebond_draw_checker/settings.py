@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-sfbo_-rwutcs^y5oq$m5h-(#051!$&+khxl&+zt!cefxllzo8$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -145,7 +145,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Django AllAuth
 SITE_ID = 1
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "prize_checker:add"
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True

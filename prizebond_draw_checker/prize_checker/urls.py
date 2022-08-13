@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path("profile", views.profile),
-    path("add", views.add_prize_bond_number)
+    path("add", views.add_prize_bond_number, name="add")
 ]
