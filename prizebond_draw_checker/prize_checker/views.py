@@ -1,4 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from .forms import PrizeBondNumberForm
 
 
 def profile(request):
@@ -10,10 +13,17 @@ def add_prize_bond_number(request):
     if not request.user.is_authenticated:
         return redirect("account_login", permanent=True)
 
+    if request.method == "POST":
+        form = PrizeBondNumberForm(request.POST)
+        if form.is_valid():
+            return HttpResponse(form.cleaned_data)
+        else:
+            return redirect(request, "add")
+
     return render(
         request=request,
         template_name="prize_checker/add_prizebond_numbers.html",
-        context={"current_user": request.user}
+        context={"form": PrizeBondNumberForm()}
     )
 
 

@@ -1,9 +1,20 @@
 {% extends "prize_checker/base.html" %}
 {% load bootstrap5 %}
+{% load i18n %}
 
 {% block title %}
-    Add Prize Bond Number
+  Add Prize Bond Number
 {% endblock %}
 {% block body %}
-    {{ current_user }}
+
+  <form id="add_prizebond_number" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">{% trans "Add numbers" %}</button>
+    {% endbuttons %}
+  </form>
 {% endblock %}
