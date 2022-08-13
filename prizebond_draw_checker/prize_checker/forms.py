@@ -2,6 +2,8 @@ from typing import List
 
 from django import forms
 
+from prize_bond_draw_manager.utils.prize_bond_pdf_parser import PrizeBondDrawParser
+
 
 class PrizeBondNumberForm(forms.Form):
     prize_bond_numbers = forms.CharField(label="Prize Bond Numbers", max_length=100)
@@ -33,9 +35,13 @@ class PrizeBondNumberForm(forms.Form):
             if "~" in numbers:
                 number_low, number_high = [int(number.strip()) for number in numbers.split("~")]
                 for number in range(number_low, number_high + 1):
-                    numbers_cleaned.append(str(number))
+                    number_str = str(number)
+                    number = PrizeBondDrawParser.fix_number_size(number_str)
+                    numbers_cleaned.append(number)
 
-            else:
+            if len(numbers) == 7:
                 numbers_cleaned.append(numbers)
+            else:
+                raise forms.ValidationError(f"{numbers} is not valid because, length of the number is not 7 digits.")
 
         return numbers_cleaned
