@@ -1,7 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import PrizeBondNumberForm
+from .models import PrizeDrawNumber
 
 
 def profile(request):
@@ -16,9 +16,9 @@ def add_prize_bond_number(request):
     if request.method == "POST":
         form = PrizeBondNumberForm(request.POST)
         if form.is_valid():
-            return HttpResponse(",".join(form.get_numbers()))
-        else:
-            return redirect(request, "add")
+            prize_bond_numbers = form.get_numbers()
+            for number in prize_bond_numbers:
+                PrizeDrawNumber.objects.create(prize_bond_number=number, user=request.user)
 
     return render(
         request=request,
