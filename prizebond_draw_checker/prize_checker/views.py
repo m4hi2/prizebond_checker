@@ -16,7 +16,7 @@ def add_prize_bond_number(request):
     if request.method == "POST":
         form = PrizeBondNumberForm(request.POST)
         if form.is_valid():
-            return HttpResponse(form.cleaned_data)
+            return HttpResponse(",".join(form.get_numbers()))
         else:
             return redirect(request, "add")
 
