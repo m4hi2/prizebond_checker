@@ -35,8 +35,20 @@ class PrizeBondDrawParser:
         self.prize_bond_draw_pdf_text = prize_bond_draw_pdf_first_page.extract_text()
 
     @staticmethod
+    def fix_number_size(number: str) -> str:
+        if len(number) < 7:
+            match len(number):
+                case 6:
+                    number = "0" + number
+                case 5:
+                    number = "00" + number
+                case 4:
+                    number = "000" + number
+        return number
+
+    @staticmethod
     def _populate_prize_brackets_with_cleaned_numbers(
-        prize_bracket: List[str], prize_numbers: List[str] | Tuple[str]
+            prize_bracket: List[str], prize_numbers: List[str] | Tuple[str]
     ) -> None:
         for number in prize_numbers:
             number = number.replace("\n", "")
@@ -44,21 +56,14 @@ class PrizeBondDrawParser:
             if len(number) < 4:
                 continue
 
-            if len(number) < 7:
-                match len(number):
-                    case 6:
-                        number = "0" + number
-                    case 5:
-                        number = "00" + number
-                    case 4:
-                        number = "000" + number
-
             if len(number) == 14:
                 number1 = number[:7]
                 number2 = number[7:]
                 prize_bracket.append(number1)
                 prize_bracket.append(number2)
                 continue
+
+            number = PrizeBondDrawParser.fix_number_size(number)
 
             prize_bracket.append(number)
 
