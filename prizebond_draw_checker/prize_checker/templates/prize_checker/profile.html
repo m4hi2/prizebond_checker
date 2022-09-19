@@ -1,20 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Profile</title>
-</head>
-<body>
-{% if user.is_authenticated %}
+  </head>
+  <body>
+    {% if user.is_authenticated %}
     <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
-{% else %}
+    {% else %}
     <p>Welcome, new user. Please log in.</p>
-{% endif %}
-<h1>
-    {{ current_user }}
-</h1>
-</body>
+    {% endif %}
+    <h1>{{ current_user }}</h1>
+    <h2>
+      {{ current_user.email }} {{ current_user.first_name }}
+      {{current_user.last_name}}
+    </h2>
+  </body>
 </html>
