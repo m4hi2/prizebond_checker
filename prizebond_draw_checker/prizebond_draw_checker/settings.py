@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "bootstrap5",
-
 ]
 
 MIDDLEWARE = [
@@ -65,7 +64,7 @@ ROOT_URLCONF = "prizebond_draw_checker.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates/"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
