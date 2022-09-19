@@ -13,6 +13,20 @@ DW = TypeVar("DW", bound="DrawWinner")
 
 
 class PrizeBondDraw(TimeStampedUUIDModel):
+    """
+    One:Many -> DrawWinner
+
+    Data Held:
+    1. Draw Term (draw_term)
+    2. Draw Date (draw_date)
+    3. Pointer to the  winning numbers (draw_winners)
+
+    Responsibilities:
+    1. Download a prize bond draw results
+    2. Parse the draw results
+    3. Create Winning number entries from the draw results
+    """
+
     draw_term = models.IntegerField(blank=False, null=False, unique=True)
     draw_date = models.DateField(blank=True, null=True)
 
@@ -43,6 +57,11 @@ class PrizeBondDraw(TimeStampedUUIDModel):
                 )
 
     def _set_draw_date(self) -> None:
+        """The official draw date are the last day of the month every 3 months.
+        But due to Bank holidays this draw date is sometimes not maintained.
+        For the purpose of simplicity and since there is no easy way to get the
+        actual dates of the draw, the draw dates are programmatically adjusted.
+        """
         draw_date_80th = datetime.date(2015, 7, 31)
 
         draw_term_delta = self.draw_term - 80
@@ -106,6 +125,19 @@ class PrizeBondDraw(TimeStampedUUIDModel):
 
 
 class DrawWinner(TimeStampedUUIDModel):
+    """
+    Many:One -> PrizeBondDraw
+
+    Data Held:
+    1. Winning Number (winning_number)
+    2. Prize Bracket (prize_bracket)
+    3. Pointer to the draw of the winning number (draw)
+
+    1. Keep track of the winning numbers and their prize brackets
+    2. If needed point to the draw that the number belonged to
+    3. Check if a number is a winning number
+    """
+
     winning_number = models.CharField(max_length=7, null=False, blank=False)
     prize_bracket = models.CharField(max_length=6, null=False, blank=False)
 
